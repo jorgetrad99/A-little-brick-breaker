@@ -16,7 +16,7 @@ ctx.fillRect(20, 20, 100, 100)
 
 let paddle = new Paddle(GAME_WIDTH, GAME_HEIGHT)
 
-new InputHandler()
+new InputHandler(paddle)
 
 paddle.draw(ctx)
 
