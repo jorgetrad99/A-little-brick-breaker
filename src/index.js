@@ -1,4 +1,5 @@
 import Paddle from './paddle.js'
+import InputHandler from './input.js'
 
 let cnvs = document.getElementById("gameScreen")  //canvas
 let ctx = cnvs.getContext("2d")            //context
@@ -13,7 +14,9 @@ ctx.fillRect(20, 20, 100, 100)
 
 
 
-var paddle = new Paddle(GAME_WIDTH, GAME_HEIGHT)
+let paddle = new Paddle(GAME_WIDTH, GAME_HEIGHT)
+
+new InputHandler()
 
 paddle.draw(ctx)
 
