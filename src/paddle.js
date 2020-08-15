@@ -5,7 +5,7 @@ export default class Paddle {
         this.width = 150
         this.height = 20
 
-        this.maxSpeed = 7
+        this.maxSpeed = 10
         this.speed = 0
 
         this.position = {
@@ -20,15 +20,13 @@ export default class Paddle {
     }
 
     update (deltaTime){
-        if(!deltaTime) return
-
         this.position.x += this.speed
 
-        if(this.position.x + this.width < 0){
-            this.position.x = this.gameWidth
+        if(this.position.x + this.width < 0){   //Cuando sobrepase 0 en x por la izq
+            this.position.x = this.gameWidth    //Lleve el paddle al finale del game width
         }
-        if (this.position.x  > this.gameWidth ) {
-            this.position.x = 0 - this.width
+        if (this.position.x  > this.gameWidth ) {   //Cuando sobrepase 800px en x por la derecha
+            this.position.x = 0 - this.width        //Lleve el paddle al principio del game width
         }
     }
 
