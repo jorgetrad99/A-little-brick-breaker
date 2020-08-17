@@ -7,7 +7,7 @@ export default class Ball {
         this.game = game;
         this.r = 8
 
-        this.speed = { x: 4, y: 2 }
+        this.speed = { x: 8, y: 4 }
 
         this.position = { x: 10, y: 10 }
     }
