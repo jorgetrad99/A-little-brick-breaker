@@ -2,7 +2,7 @@ export default class Brick {
 
     constructor (game, position) {
         this.game = game
-        this.width = 52
+        this.width = 80
         this.height = 24
 
         this.position = position
