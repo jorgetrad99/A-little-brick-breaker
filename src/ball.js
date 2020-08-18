@@ -8,7 +8,11 @@ export default class Ball {
 
         this.game = game;
         this.r = 8
+        this.reset()
+        
+    }
 
+    reset() {
         this.speed = { x: 4, y: -2 }
 
         this.position = { x: 10, y: 400 }
@@ -32,9 +36,15 @@ export default class Ball {
             this.speed.x = -this.speed.x
         }
     
-        //Wall on top or bottom
-        if(this.position.y + this.r  > this.gameHeight || this.position.y < 0 + this.r){
+        //Wall on top
+        if(this.position.y < 0 + this.r){
             this.speed.y = -this.speed.y
+        }
+
+        //Bottom of the game
+        if( this.position.y + this.r  > this.gameHeight ){
+            this.game.lives--
+            this.reset()
         }
 
         if(detectCollision(this, this.game.paddle)) {

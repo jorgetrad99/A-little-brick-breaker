@@ -15,9 +15,9 @@ export default class Game {
         this.gameWidth = gameWidth
         this.gameHeight = gameHeight
         this.gameState = GAME_STATE.MENU
-        this.paddle = new Paddle(this)
+        this.paddle = new Paddle(this)3
         this.ball = new Ball(this)
-
+        this.lives = 3
         this.gameObjects = []
 
         new InputHandler(this.paddle, this)
@@ -32,11 +32,14 @@ export default class Game {
     }
 
     update(deltaTime) {
+        if(this.lives === 0) this.gameState = GAME_STATE.GAME_OVER
+
         /* this.paddle.update(deltaTime)
         this.ball.update(deltaTime) */
         /* console.log("Estoy corriendo") */
         if(this.gameState === GAME_STATE.PAUSED || 
-        this.gameState === GAME_STATE.MENU) {
+        this.gameState === GAME_STATE.MENU ||
+        this.gameState === GAME_STATE.GAME_OVER) {
             return       //Detiene las actualizaciones de pantalla
         }
         this.gameObjects.forEach((object) => object.update(deltaTime))
@@ -70,6 +73,18 @@ export default class Game {
             ctx.fillStyle = "white"
             ctx.textAlign = "center"
             ctx.fillText("Press SPACE-BAR to  Start", this.gameWidth / 2, this.gameHeight / 2)
+
+        }
+
+        if( this.gameState == GAME_STATE.GAME_OVER) {
+            ctx.rect(0, 0, this.gameWidth, this.gameHeight)
+            ctx.fillStyle = "rgba(0, 0, 0, 1)"
+            ctx.fill()
+
+            ctx.font = "40px Arial"
+            ctx.fillStyle = "white"
+            ctx.textAlign = "center"
+            ctx.fillText("GAME OVER", this.gameWidth / 2, this.gameHeight / 2)
 
         }
     }
