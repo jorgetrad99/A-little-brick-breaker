@@ -14,29 +14,34 @@ export default class Game {
     constructor(gameWidth, gameHeight) {
         this.gameWidth = gameWidth
         this.gameHeight = gameHeight
+        this.gameState = GAME_STATE.MENU
+        this.paddle = new Paddle(this)
+        this.ball = new Ball(this)
+
+        this.gameObjects = []
+
+        new InputHandler(this.paddle, this)
     }
 
     start() {
-        this.gameState = GAME_STATE.RUNNING
-        this.paddle = new Paddle(this)
-        this.ball = new Ball(this)
-        new InputHandler(this.paddle, this)
+        if(this.gameState !== GAME_STATE.MENU) return
 
         let bricks = buildLevel(this, level1)
-
         this.gameObjects = [ this.ball, this.paddle, ...bricks ]
+        this.gameState = GAME_STATE.RUNNING
     }
 
     update(deltaTime) {
         /* this.paddle.update(deltaTime)
         this.ball.update(deltaTime) */
         /* console.log("Estoy corriendo") */
-        if(this.gameState == GAME_STATE.PAUSED) {
-            return                                  //Detiene las actualizaciones de pantalla
+        if(this.gameState === GAME_STATE.PAUSED || 
+        this.gameState === GAME_STATE.MENU) {
+            return       //Detiene las actualizaciones de pantalla
         }
         this.gameObjects.forEach((object) => object.update(deltaTime))
-        this.gameObjects = this.gameObjects.filter(object => !object.markedForDeletion)
-
+        this.gameObjects = this.gameObjects.filter(
+            object => !object.markedForDeletion)
     }
 
     draw(ctx) {
@@ -53,6 +58,18 @@ export default class Game {
             ctx.fillStyle = "white"
             ctx.textAlign = "center"
             ctx.fillText("PAUSED", this.gameWidth / 2, this.gameHeight / 2)
+
+        }
+
+        if( this.gameState == GAME_STATE.MENU) {
+            ctx.rect(0, 0, this.gameWidth, this.gameHeight)
+            ctx.fillStyle = "rgba(0, 0, 0, 1)"
+            ctx.fill()
+
+            ctx.font = "40px Arial"
+            ctx.fillStyle = "white"
+            ctx.textAlign = "center"
+            ctx.fillText("Press SPACE-BAR to  Start", this.gameWidth / 2, this.gameHeight / 2)
 
         }
     }
